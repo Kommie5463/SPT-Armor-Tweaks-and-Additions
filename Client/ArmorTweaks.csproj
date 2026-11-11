@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<AssemblyName>ArmorTweaks</AssemblyName>
+		<RootNamespace>Kommie.ArmorTweaks</RootNamespace>
+		<LangVersion>latest</LangVersion>
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<SptPath>C:\SPT</SptPath>
+		<Managed>$(SptPath)\EscapeFromTarkov_Data\Managed</Managed>
+		<BepCore>$(SptPath)\BepInEx\core</BepCore>
+		<SptPlugins>$(SptPath)\BepInEx\plugins\spt</SptPlugins>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Server\**" />
+	  <EmbeddedResource Remove="Server\**" />
+	  <None Remove="Server\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="BepInEx"><HintPath>$(BepCore)\BepInEx.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="0Harmony"><HintPath>$(BepCore)\0Harmony.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="spt-reflection"><HintPath>$(SptPlugins)\spt-reflection.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="Assembly-CSharp"><HintPath>$(Managed)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="ItemComponent.Types"><HintPath>$(Managed)\ItemComponent.Types.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="UnityEngine"><HintPath>$(Managed)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="Comfort"><HintPath>$(Managed)\Comfort.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="Newtonsoft.Json"><HintPath>$(Managed)\Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="UnityEngine.UI"><HintPath>$(Managed)\UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+		<Reference Include="UnityEngine.CoreModule"><HintPath>$(Managed)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+	</ItemGroup>
+
+	<Target Name="CopyToPlugins" AfterTargets="Build" Condition="Exists('$(SptPath)\BepInEx\plugins')">
+		<Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(SptPath)\BepInEx\plugins" />
+	</Target>
+
+</Project>

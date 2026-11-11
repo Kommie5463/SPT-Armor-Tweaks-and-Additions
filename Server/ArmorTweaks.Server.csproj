@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>ArmorTweaks.Server</AssemblyName>
+    <RootNamespace>Kommie.ArmorTweaks.Server</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+	<SptPath>C:\SPT</SptPath>
+	<SptMods>$(SptPath)\SPT_Runtime\user\mods</SptMods>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="SPTarkov.Server.Core" Version="4.1.*" PrivateAssets="all" />
+    <PackageReference Include="SPTarkov.DI" Version="4.1.*" PrivateAssets="all" />
+    <PackageReference Include="SPTarkov.Common" Version="4.1.*" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="Exists('$(SptPath)\SPT_Runtime\user\mods')">
+	<Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(SptPath)\SPT_Runtime\user\mods\ArmorTweaks" />
+  </Target>
+	
+</Project>
