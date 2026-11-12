@@ -1,14 +1,35 @@
 # SPT-Armor-Tweaks-and-Additions
-This SPT Mod is a few tweaks and additions that I noticed would fit well within the vanilla game and alongside each other and/or other mods.
+This SPT Mod is a few tweaks and additions that I noticed would fit well within the vanilla game and alongside each other and/or other mods. 
+
+- **Armor Stacking**: Wear body armor and an armored rig together, with soft armor taking part in the shot path.
+- **Soft Armor Swap**: Remove and swap soft armor and helmet inserts, with weight and penalties that scale by how many are installed.
+- **Armor Refurbishment**: Kits that restore soft armor and helmet inserts to factory condition.
+- **Armor Readout**: Shows the armor points covering each zone of your body in the health tab.
 
 # Armor Stacking
-The Armor Stacking module allows players to wear body armor and a armored rig together (SVM option to allow body armor and armored rigs together has no effect on my mod meaning with/without it enabled my mod works fine and allows the player to wear them together) effectively doubling the protection one can achieve from any armored area. In vanilla SPT there is a issue with how stacking body armor and armored rigs would behave when shot in the chest, back, and sides where the shot would hit the 2 removable ballistic plates that the player would install in their armor and completely ignore the soft armor inserts in both armor pieces until both plates are broken which only then does the soft armor start taking damage and attempting to stop bullets (vanilla behaves like so: plate, plate, soft armor, soft armor), but by that point the efforts are fruitless as soft armor is typically lower class armor and breaks really fast, with this module enabled the issue with armor layering is fixed allowing soft armor to take part in the shot path meaning that the bullet will hit alternating layers of armor before hitting the player (my mod orders armor layers like so: plate, soft armor, plate, soft armor) as the bullet penetrates each layer the bullet's penetration power is dragged down according to vanilla SPT's shot calculation meaning that a bullet with high penetration has a chance to stop earlier than it should because the amount of armor it had to penetrate was too great for it to defeat, blunt damage still applies to the player as vanilla handles it meaning it could require changes but I am unsure as it seems to feel fine to play with as I extensively tested this module in both my development environment and my main modded environment through hundreds of raids.
+This module lets you wear body armor and an armored rig together, adding a second layer to any armored area. The SVM option for this has no effect on the module, meaning it works with or without it.
+
+In vanilla SPT, even with SVM, a shot to the chest, back or sides hits the removable plates first and ignores the soft armor inserts until both plates break (rig plate, body armor plate, rig soft armor, body armor soft armor). By then the soft armor, usually a lower class, breaks quickly and doesn't help.
+
+With this module the layers are ordered rig plate, rig soft armor, body armor plate, body armor soft armor. Each layer the bullet gets through lowers its penetration power using vanilla SPT's own shot calculation, so a high-penetration round can stop earlier than it otherwise would. Blunt damage also still uses vanilla behavior.
 
 # Soft Armor Swap
-The Soft Armor Swap module unlocks the soft armor inserts within body armor and armored rigs aswell as the armor inserts found within helmets allowing players to remove and swap inserts around meaning one can increase or decrease the armor class and/or armor points in a armor slot within their favorite piece of armor, this module also will scale the armor penalties found on body armor and armored rigs by how many of the soft armor slots are filled within that piece of armor, if half of the slots within a armored rig or body armor are filled then the penalties are only half as bad, soft armor inserts also now have weight and can make a piece of armor lighter or heavier as the inserts are added and removed, when a piece of armor has all of their soft armor inserts filled then the penalties and weight will stack up to that piece of armor's vanilla values, finally all armor inserts have been given a in world model allowing for the inserts to be dropped in a raid and picked back up all without messing with the inventory icons so all inserts look as they should in the inventory.
+This module unlocks the soft armor inserts in body armor and armored rigs, the inserts in helmets, the inserts in modded armor, and the leg armor from Manimal's leg armor mod. You can remove and swap them to raise or lower the armor class and armor points in each slot of your favorite gear.
+
+- Penalties on body armor and rigs scale with how many soft armor slots are filled. Half the slots filled means half the penalty.
+- Inserts now have weight, so gear gets heavier or lighter as you add and remove them. With every insert in, penalties and weight match the vanilla values.
+- Every insert has an in-world model, so you can drop one in a raid and pick it back up, and the inventory icons look as they should.
 
 # Armor Refurbishment
-The Armor Refurbishment module adds a helmet and a soft armor refurbishment kit that is meant to work along side Wade's armor plate restoration and Egbog's repair max durability mods, these refurbishment kits target as their name suggests helmet and soft armor inserts respectively behaving similar to the other 2 restoration mods where you need to achieve max repairable durability on a insert before you can refurbish it, both kits are purchasable from Ragman at loyalty level 2 or on flea.
+This module adds a soft armor refurbishment kit and a helmet refurbishment kit. They are meant to be used alongside Wade's armor plate restoration and Egbog's repair max durability mods. An insert must be at its maximum repairable durability before it can be refurbished, and the kit then restores it to factory condition.
+
+Drag a kit onto a piece of gear to use it, each kit has 5 uses and gives repair skill XP, the kits are sold by Ragman at loyalty level 2 (95k for the soft armor kit, 80k for the helmet kit) and on the flea market.
+
+# Armor Readout
+This module adds a readout to the health tab of the inventory. It shows the total armor points for each zone of your body, such as chest front, back and sides, head, nape and face, and thigh and calf if you use a leg armor mod.
 
 # Credits
-While I didn't want to nor did I use their code I did use their ideas and mods as a baseline of what I wanted within my mod I still want to give credit where credit is due by thanking Wade for his amazing Plate Restoration mod and Egbog for his amazing Repair Max Durability mod as without either of them I most likely wouldn't have made my armor refurbishment module within this mod, if either Wade or Egbog have any concerns about the refurbishment module then feel free to contact me.
+I didn't use anyone else's code, but I did use Wade's Plate Restoration mod and Egbog's Repair Max Durability mod as the baseline for my refurbishment module. Thank you both. If either of you has concerns about it, please contact me. I also want to thank Manimal for the leg armor mod that the swap and readout modules support.
+
+# Disclosure
+I used Claude Sonnet 5.5 Medium to aid in my development of my mods, I read the code and test everything thoroughly in a vanilla and heavily modded environment before I feel confident in releasing it.
