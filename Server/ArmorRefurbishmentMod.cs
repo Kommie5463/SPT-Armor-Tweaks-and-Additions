@@ -22,8 +22,8 @@ public class ArmorRefurbishmentMod(
 {
 
     public const int KitUses = 5;
-    private const double SoftKitPrice = 80000;
-    private const double HelmetKitPrice = 95000;
+    private const double SoftKitPrice = 95000;
+    private const double HelmetKitPrice = 80000;
     private const int SellerLoyalty = 2;
 
     private static readonly MongoId[] NoWindowTargets = { BaseClasses.STASH };

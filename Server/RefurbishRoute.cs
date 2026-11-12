@@ -5,6 +5,7 @@ using SPTarkov.Server.Core.Helpers.Profile;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Enums;
+using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Spt.Tables;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Utils;
@@ -45,14 +46,15 @@ public class RefurbishRoute : StaticRouter
 }
 
 [Injectable]
-public class RefurbishService(TemplateTable templates, ProfileHelper profiles)
+public class RefurbishService(TemplateTable templates, ProfileHelper profiles, RepairConfig repairConfig)
 {
     private const double Epsilon = 0.01;
 
     public RefurbishResult Apply(MongoId sessionId, RefurbishRequest request)
     {
         var result = new RefurbishResult();
-        var items = profiles.GetPmcProfile(sessionId)?.Inventory?.Items;
+        var pmc = profiles.GetPmcProfile(sessionId);
+        var items = pmc?.Inventory?.Items;
         var db = templates.Items;
         if (items == null) return Fail(result, "No inventory found");
 
@@ -74,7 +76,10 @@ public class RefurbishService(TemplateTable templates, ProfileHelper profiles)
         foreach (var piece in Candidates(items, db, target))
         {
             if (uses < 1) break;
-            if (!Refurbish(piece, db[piece.Template])) continue;
+            var restored = Refurbish(piece, db[piece.Template]);
+            if (restored <= 0) continue;
+            var skill = db[piece.Template].Properties?.ArmorType == "Heavy" ? SkillTypes.HeavyVests : SkillTypes.LightVests;
+            profiles.AddSkillPointsToPlayer(pmc!, skill, restored * repairConfig.ArmorKitSkillPointGainPerRepairPointMultiplier, true);
             result.Pieces.Add(new PieceResult
             {
                 Id = piece.Id.ToString(),
@@ -135,15 +140,16 @@ public class RefurbishService(TemplateTable templates, ProfileHelper profiles)
         return false;
     }
 
-    private static bool Refurbish(Item piece, TemplateItem template)
+    private static double Refurbish(Item piece, TemplateItem template)
     {
         var factory = template.Properties?.MaxDurability;
         var rep = piece.Upd?.Repairable;
-        if (factory == null || rep?.MaxDurability == null || rep.Durability == null) return false;
-        if (rep.MaxDurability >= factory - Epsilon) return false;
-        if (rep.Durability < rep.MaxDurability - Epsilon) return false;
+        if (factory == null || rep?.MaxDurability == null || rep.Durability == null) return 0;
+        if (rep.MaxDurability >= factory - Epsilon) return 0;
+        if (rep.Durability < rep.MaxDurability - Epsilon) return 0;
+        var restored = factory.Value - rep.MaxDurability.Value;
         rep.MaxDurability = factory;
         rep.Durability = factory;
-        return true;
+        return restored;
     }
 }

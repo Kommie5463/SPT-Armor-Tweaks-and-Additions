@@ -31,6 +31,7 @@ namespace Kommie.ArmorRefurbishment.Client
         {
             Log = log;
             new KitDropPatch().Enable();
+            new HideFromRepairPatch().Enable();
             log.LogInfo("Armor Refurbishment Client loaded");
         }
 
@@ -38,6 +39,30 @@ namespace Kommie.ArmorRefurbishment.Client
         {
             string id = item.TemplateId.ToString();
             return id == SoftKitId || id == HelmetKitId;
+        }
+    }
+
+    internal class HideFromRepairPatch : ModulePatch
+    {
+        protected override MethodBase GetTargetMethod()
+        {
+            foreach (Type type in typeof(Item).Assembly.GetTypes())
+            {
+                if (!typeof(Item).IsAssignableFrom(type)) continue;
+                MethodInfo method = type.GetMethod("CanRepair",
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+                    null, new[] { typeof(Item) }, null);
+                if (method != null) return method;
+            }
+            return null;
+        }
+
+        [PatchPrefix]
+        private static bool Prefix(Item __instance, ref bool __result)
+        {
+            if (!ArmorRefurbishmentPlugin.IsKit(__instance)) return true;
+            __result = false;
+            return false;
         }
     }
 

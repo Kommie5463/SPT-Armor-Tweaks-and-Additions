@@ -17,6 +17,9 @@ namespace Kommie.ArmorTweaks
                 "Armor Refurbishment: drag a refurbishment kit onto gear to restore its inserts. " +
                 "The server mod has its own switch for this module (see its config.json).");
 
+            ConfigEntry<bool> readout = Config.Bind("Modules", "ArmorHealthReadout", true,
+                "Armor Health Readout: total armor points covering each body part, shown under its health in the inventory health screen.");
+
             kommie.armorstacking.ArmorStackingPlugin.ExtraAbsorption = Config.Bind("ArmorStacking", "ExtraAbsorption", 0f,
                 new ConfigDescription(
                     "Extra penetration power each defeated layer absorbs on top of the game's own carry factor (CF). " +
@@ -34,6 +37,9 @@ namespace Kommie.ArmorTweaks
 
             if (swap.Value) Kommie.SoftArmorSwap.SoftArmorSwapPlugin.Init(Logger);
             else Logger.LogInfo("Soft Armor Swap is switched off in the config.");
+
+            if (readout.Value) ArmorHealthReadout.Init(Logger);
+            else Logger.LogInfo("Armor Health Readout is switched off in the config.");
 
             if (refurb.Value) Kommie.ArmorRefurbishment.Client.ArmorRefurbishmentPlugin.Init(Logger);
             else Logger.LogInfo("Armor Refurbishment is switched off in the config.");
