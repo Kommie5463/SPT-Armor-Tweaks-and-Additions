@@ -29,7 +29,7 @@ Drag a kit onto a piece of gear to use it, each kit has 5 uses and gives repair 
 This module adds a readout to the health tab of the inventory. It shows the total armor points for each zone of your body, such as chest front, back and sides, head, nape and face, and thigh and calf if you use a leg armor mod.
 
 # Credits
-I didn't use anyone else's code, but I did use Wade's Plate Restoration mod and Egbog's Repair Max Durability mod as the baseline for my refurbishment module. Thank you both. If either of you has concerns about it, please contact me. I also want to thank Manimal for the leg armor mod that the swap and readout modules support.
+I didn't use anyone else's code, but I did use Wade's Plate Restoration mod and Egbog's Repair Max Durability mod as the baseline for my refurbishment module. Thank you both. If either of you has concerns about it, please contact me.
 
 # AI Disclosure
 I used Claude Sonnet 5.5 Medium to aid in my development of my mods, I read the code and test everything thoroughly in a vanilla and heavily modded environment before I feel confident in releasing it.
